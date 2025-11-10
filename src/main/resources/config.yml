@@ -1,0 +1,13 @@
+# 🌟 SkyXEvents - Random Chest Spawn Settings
+
+world: "world"           # world where chests spawn
+spawn_interval_seconds: 1200  # every 20 minutes (1200 sec)
+
+min_x: -2000
+max_x: 2000
+min_z: -2000
+max_z: 2000
+
+# Chest pool configuration
+# Each chest definition is stored in /chests/*.yml
+chests_path: "chests"

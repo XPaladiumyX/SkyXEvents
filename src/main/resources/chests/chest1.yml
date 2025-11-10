@@ -1,0 +1,16 @@
+chest:
+  display_name: "&c&lChristmas Chest"
+  broadcast: true
+
+  items:
+    - material: DIAMOND
+      amount: 3
+      name: "&bShiny Diamond"
+      lore:
+        - "&7A precious gem"
+        - "&c&l★ 2025 CHRISTMAS EDITION ★"
+      glow: true
+
+  commands:
+    - "say %player% opened a Christmas Chest!"
+    - "give %player% diamond 10"

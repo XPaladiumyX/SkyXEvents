@@ -6,3 +6,8 @@ prefix: SkyXCore-Logger
 authors: [ XPaladiumyX ]
 description: Made with love and determination
 website: skyxnetwork.net
+commands:
+  skyxevents:
+    description: Main command for SkyXEvents
+    usage: /skyxevents <reload|force>
+    aliases: [ sxe ]
