@@ -20,17 +20,23 @@ public class SkyXEvents extends JavaPlugin {
 
     public static NamespacedKey CHEST_COMMANDS_KEY;
     public static PersistentDataType<List<String>, List<String>> STRING_LIST;
+    public static NamespacedKey CHEST_HOLOGRAM_KEY;
+    public static NamespacedKey CHEST_LOOTED_KEY;
+
 
     @Override
     public void onEnable() {
         instance = this;
 
         saveDefaultConfig();
+        ConfigManager.createDefaultChestIfMissing();
         ConfigManager.loadChestFiles();
 
         int delay = getConfig().getInt("spawn_interval_seconds");
 
         CHEST_COMMANDS_KEY = new NamespacedKey(this, "chest_commands");
+        CHEST_HOLOGRAM_KEY = new NamespacedKey(this, "chest_hologram");
+        CHEST_LOOTED_KEY = new NamespacedKey(this, "chest_looted");
         STRING_LIST = PersistentDataType.LIST.strings();
 
         getServer().getPluginManager().registerEvents(new ChestOpenListener(), this);
