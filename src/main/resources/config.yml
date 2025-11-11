@@ -11,3 +11,4 @@ max_z: 2000
 # Chest pool configuration
 # Each chest definition is stored in /chests/*.yml
 chests_path: "chests"
+auto_remove_seconds: 600  # 10 minutes
