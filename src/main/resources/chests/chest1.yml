@@ -1,22 +1,22 @@
 chest:
-  display_name: "&c&lChristmas Chest"
+  display_name: "&b&lWinter Miracle Chest &7(&fSnow Key&7)"
   broadcast: true
+  chance: 8
 
   hologram:
     enabled: true
     lines:
-      - "&c&l🎁 Christmas Chest"
-      - "&f&oClick to open"
+      - "&b&l❄ Winter Miracle Chest"
+      - "&f&oExtremely rare"
 
   items:
-    - material: DIAMOND
+    - material: GOLD_INGOT
       amount: 3
-      name: "&bShiny Diamond"
+      name: "&6Golden Gift"
       lore:
-        - "&7A precious gem"
+        - "&7Valuable resource"
         - "&c&l★ 2025 CHRISTMAS EDITION ★"
       glow: true
 
   commands:
-    - "say %player% opened a Christmas Chest!"
-    - "iagive %player% christmas:santa_hat"
+    - "iagive %player% christmas:snow_key"
