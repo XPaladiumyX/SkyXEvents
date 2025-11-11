@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class ConfigManager {
 
@@ -36,10 +35,35 @@ public class ConfigManager {
     }
 
 
+    /**
+     * ✅ Select chest based on chance weight from chestX.yml
+     */
+    private static YamlConfiguration getRandomChestByChance() {
+
+        double totalChance = 0;
+        for (YamlConfiguration c : chests) {
+            totalChance += c.getDouble("chest.chance", 0);
+        }
+
+        double random = Math.random() * totalChance;
+        double current = 0;
+
+        for (YamlConfiguration c : chests) {
+            current += c.getDouble("chest.chance", 0);
+            if (random <= current) return c;
+        }
+
+        return chests.get(0); // fallback
+
+    }
+
+    /**
+     * ✅ Fill chest with weighted random loot
+     */
     public static ChestConfig fillChestWithRandomLoot(Chest chest) {
         if (chests.isEmpty()) return null;
 
-        YamlConfiguration c = chests.get(new Random().nextInt(chests.size()));
+        YamlConfiguration c = getRandomChestByChance();
         ChestConfig chestConfig = new ChestConfig(c);
 
         chest.getInventory().clear();
@@ -47,7 +71,7 @@ public class ConfigManager {
         List<?> rawItems = c.getList("chest.items");
         List<String> rawCommands = c.getStringList("chest.commands");
 
-        // ✅ Ajout d'items dans le coffre
+        // ✅ Ajoute les items dans le coffre
         if (rawItems != null) {
             for (Object o : rawItems) {
                 if (o instanceof Map<?, ?> map) {
@@ -56,7 +80,7 @@ public class ConfigManager {
             }
         }
 
-        // ✅ Exécute commandes quand le coffre sera ouvert
+        // ✅ Stocke les commandes dans le coffre (exécutées à l'ouverture)
         if (!rawCommands.isEmpty()) {
             chest.getPersistentDataContainer().set(
                     SkyXEvents.CHEST_COMMANDS_KEY,
@@ -66,8 +90,7 @@ public class ConfigManager {
         }
 
         chest.update();
-
-        return chestConfig; // retourne pour que ChestManager puisse accéder à l’hologram
+        return chestConfig;
     }
 
     public static void createDefaultChestIfMissing() {
@@ -80,7 +103,7 @@ public class ConfigManager {
         SkyXEvents.getInstance().saveResource("chests/chest1.yml", false);
         chestFile.renameTo(new File(folder, "chest1.yml"));
 
-        Bukkit.getLogger().info("[SkyXEvents] Default chest.yml created.");
+        Bukkit.getLogger().info("[SkyXEvents] Default chest1.yml created.");
     }
 
 }
