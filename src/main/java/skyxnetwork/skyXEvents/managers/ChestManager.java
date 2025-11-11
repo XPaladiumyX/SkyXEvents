@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import skyxnetwork.skyXEvents.SkyXEvents;
 import skyxnetwork.skyXEvents.utils.ChestConfig;
@@ -35,6 +36,14 @@ public class ChestManager {
         Location loc = new Location(world, x, y, z);
         loc.getBlock().setType(Material.CHEST);
         Chest chest = (Chest) loc.getBlock().getState();
+
+        // ✅ Tag persist pour reconnaître ce coffre comme un coffre d’event
+        chest.getPersistentDataContainer().set(
+                SkyXEvents.CHEST_LOOTED_KEY,
+                PersistentDataType.INTEGER,
+                0
+        );
+        chest.update();
 
         String prefix = SkyXEvents.getInstance().getConfig().getString("prefix", "");
 
