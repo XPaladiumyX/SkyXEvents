@@ -22,7 +22,7 @@ Each chest file (`chest1.yml`, `chest2.yml`, …) has **its own loot table**, al
 ✅ Optional hologram support (HolographicDisplays / DecentHolograms if installed)  
 ✅ Protection system: prevents breaking unopened chests  
 ✅ Reload command (no restart required)  
-✅ Very lightweight — no lag, async operations  
+✅ Very lightweight, no lag, async operations  
 ✅ Designed for seasonal events (Christmas gift hunt, treasure events, etc.)
 
 ---
@@ -114,4 +114,5 @@ Made with ❤️ by XPaladiumyX for SkyXNetwork
 ---
 
 If you like the plugin, ⭐ star the repo on GitHub!
+
 
