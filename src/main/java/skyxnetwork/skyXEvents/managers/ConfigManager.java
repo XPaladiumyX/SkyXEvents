@@ -67,4 +67,18 @@ public class ConfigManager {
 
         chest.update();
     }
+
+    public static void createDefaultChestIfMissing() {
+        File folder = new File(SkyXEvents.getInstance().getDataFolder(), "chests");
+        if (!folder.exists()) folder.mkdirs();
+
+        if (folder.listFiles() != null && folder.listFiles().length > 0) return;
+
+        File chestFile = new File(folder, "chest1.yml");
+        SkyXEvents.getInstance().saveResource("default_chest.yml", false);
+        chestFile.renameTo(new File(folder, "chest1.yml"));
+
+        Bukkit.getLogger().info("[SkyXEvents] Default chest.yml created.");
+    }
+
 }
