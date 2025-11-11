@@ -75,7 +75,7 @@ public class ConfigManager {
         if (folder.listFiles() != null && folder.listFiles().length > 0) return;
 
         File chestFile = new File(folder, "chest1.yml");
-        SkyXEvents.getInstance().saveResource("default_chest.yml", false);
+        SkyXEvents.getInstance().saveResource("chests/chest1.yml", false);
         chestFile.renameTo(new File(folder, "chest1.yml"));
 
         Bukkit.getLogger().info("[SkyXEvents] Default chest.yml created.");
