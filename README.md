@@ -5,7 +5,7 @@
 
 # 🎄 SkyXEvents, Random Chest / Gift Event Plugin (1.21+)
 
-SkyXEvents adds **random event chests** to your Survival worlds — perfect for Christmas, Easter, or any seasonal treasure hunt.
+SkyXEvents adds **random event chests** to your Survival worlds! Perfect for Christmas, Easter, or any seasonal treasure hunt.
 
 When the event triggers, a chest spawns at a random location. Players must search for it and loot its rewards.  
 Each chest file (`chest1.yml`, `chest2.yml`, …) has **its own loot table**, allowing different rewards per event.
@@ -114,3 +114,4 @@ Made with ❤️ by XPaladiumyX for SkyXNetwork
 ---
 
 If you like the plugin, ⭐ star the repo on GitHub!
+
