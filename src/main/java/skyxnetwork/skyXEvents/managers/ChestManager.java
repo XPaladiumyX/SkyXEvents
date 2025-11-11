@@ -37,6 +37,9 @@ public class ChestManager {
 
         int autoRemove = SkyXEvents.getInstance().getConfig().getInt("auto_remove_seconds");
 
+        // Création hologramme countdown
+        HologramManager.createCountdownHologram(loc, autoRemove);
+
         Bukkit.getScheduler().runTaskLater(SkyXEvents.getInstance(), () -> {
             if (chest.getPersistentDataContainer().has(SkyXEvents.CHEST_LOOTED_KEY))
                 return;
