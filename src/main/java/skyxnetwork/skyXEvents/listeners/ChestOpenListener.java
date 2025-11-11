@@ -7,18 +7,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.persistence.PersistentDataType;
 import skyxnetwork.skyXEvents.SkyXEvents;
+import skyxnetwork.skyXEvents.managers.ChestManager;
 import skyxnetwork.skyXEvents.managers.ConfigManager;
 import skyxnetwork.skyXEvents.managers.HologramManager;
 import skyxnetwork.skyXEvents.utils.ChestConfig;
 import skyxnetwork.skyXEvents.utils.ItemUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class ChestOpenListener implements Listener {
-
-    // Map pour savoir quels joueurs ont déjà ouvert quel coffre
-    private final Map<Location, Set<UUID>> claimedChests = new HashMap<>();
 
     @EventHandler
     public void onChestOpen(InventoryOpenEvent e) {
@@ -29,19 +29,21 @@ public class ChestOpenListener implements Listener {
         Chest chest = (Chest) e.getInventory().getHolder();
         Location loc = chest.getLocation();
 
+        // ❌ Si le coffre n'a pas le TAG, on laisse l'ouverture vanilla
+        if (!chest.getPersistentDataContainer().has(SkyXEvents.CHEST_LOOTED_KEY, PersistentDataType.INTEGER)) {
+            return;
+        }
+
         String prefix = SkyXEvents.getInstance().getConfig().getString("prefix", "");
 
-        // Initialise le set si nécessaire
-        claimedChests.putIfAbsent(loc, new HashSet<>());
-
-        // Si le joueur a déjà ouvert ce coffre, on bloque
-        if (claimedChests.get(loc).contains(player.getUniqueId())) {
+        // Vérifie si le joueur a déjà ouvert le coffre
+        if (ChestManager.hasClaimed(player, loc)) {
             player.sendMessage(ItemUtils.colorize(prefix + "§cYou have already claimed this chest!"));
             e.setCancelled(true);
             return;
         }
 
-        // Annule l'ouverture réelle du coffre (pas de cooldown relancé)
+        // Annule l'ouverture réelle du coffre (pas de doublon de cooldown)
         e.setCancelled(true);
 
         // Donne les items au joueur
@@ -65,8 +67,8 @@ public class ChestOpenListener implements Listener {
             }
         }
 
-        // Ajoute le joueur au set pour cooldown
-        claimedChests.get(loc).add(player.getUniqueId());
+        // Marque le joueur comme ayant ouvert le coffre
+        ChestManager.markClaimed(player, loc);
 
         // Message global pour dire qu'un joueur a ouvert le coffre
         Bukkit.broadcastMessage(ItemUtils.colorize(prefix + "§a" + player.getName() +
