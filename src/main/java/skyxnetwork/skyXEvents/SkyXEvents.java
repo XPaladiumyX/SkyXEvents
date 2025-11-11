@@ -4,6 +4,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import skyxnetwork.skyXEvents.listeners.ChestOpenListener;
+import skyxnetwork.skyXEvents.listeners.ChestProtectListener;
 import skyxnetwork.skyXEvents.managers.ChestManager;
 import skyxnetwork.skyXEvents.managers.ConfigManager;
 import skyxnetwork.skyXEvents.tasks.SpawnChestTask;
@@ -39,6 +40,7 @@ public class SkyXEvents extends JavaPlugin {
         CHEST_LOOTED_KEY = new NamespacedKey(this, "chest_looted");
         STRING_LIST = PersistentDataType.LIST.strings();
 
+        getServer().getPluginManager().registerEvents(new ChestProtectListener(), this);
         getServer().getPluginManager().registerEvents(new ChestOpenListener(), this);
 
 
