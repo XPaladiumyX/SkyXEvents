@@ -2,6 +2,12 @@ chest:
   display_name: "&c&lChristmas Chest"
   broadcast: true
 
+  hologram:
+    enabled: true
+    lines:
+      - "&c&l🎁 Christmas Chest"
+      - "&f&oClick to open"
+
   items:
     - material: DIAMOND
       amount: 3
@@ -13,4 +19,4 @@ chest:
 
   commands:
     - "say %player% opened a Christmas Chest!"
-    - "give %player% diamond 10"
+    - "iagive %player% christmas:santa_hat"
