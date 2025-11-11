@@ -3,8 +3,8 @@ package skyxnetwork.skyXEvents.managers;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 import skyxnetwork.skyXEvents.SkyXEvents;
+import skyxnetwork.skyXEvents.utils.ChestConfig;
 import skyxnetwork.skyXEvents.utils.ItemUtils;
 
 import java.io.File;
@@ -36,27 +36,27 @@ public class ConfigManager {
     }
 
 
-    public static void fillChestWithRandomLoot(Chest chest) {
-        if (chests.isEmpty()) return;
+    public static ChestConfig fillChestWithRandomLoot(Chest chest) {
+        if (chests.isEmpty()) return null;
 
         YamlConfiguration c = chests.get(new Random().nextInt(chests.size()));
+        ChestConfig chestConfig = new ChestConfig(c);
 
         chest.getInventory().clear();
 
         List<?> rawItems = c.getList("chest.items");
         List<String> rawCommands = c.getStringList("chest.commands");
 
-        // ✅ Ajout d'item dans le coffre
+        // ✅ Ajout d'items dans le coffre
         if (rawItems != null) {
             for (Object o : rawItems) {
                 if (o instanceof Map<?, ?> map) {
-                    ItemStack is = ItemUtils.createFromMap((Map<String, Object>) map);
-                    chest.getInventory().addItem(is);
+                    chest.getInventory().addItem(ItemUtils.createFromMap((Map<String, Object>) map));
                 }
             }
         }
 
-        // ✅ exécute commandes quand le coffre sera ouvert
+        // ✅ Exécute commandes quand le coffre sera ouvert
         if (!rawCommands.isEmpty()) {
             chest.getPersistentDataContainer().set(
                     SkyXEvents.CHEST_COMMANDS_KEY,
@@ -66,6 +66,8 @@ public class ConfigManager {
         }
 
         chest.update();
+
+        return chestConfig; // retourne pour que ChestManager puisse accéder à l’hologram
     }
 
     public static void createDefaultChestIfMissing() {

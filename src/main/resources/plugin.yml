@@ -11,3 +11,5 @@ commands:
     description: Main command for SkyXEvents
     usage: /skyxevents <reload|force>
     aliases: [ sxe ]
+    permission: skyxevents.admin
+    permission-message: You have No Permissions to do that!
